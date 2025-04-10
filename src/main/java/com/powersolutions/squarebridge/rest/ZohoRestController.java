@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ZohoRestController {
 
     @GetMapping("/create_payment")
-    public void createPayment(HttpServletRequest request) {
-        System.out.println(request.getRemoteAddr());
+    public void createPayment(@RequestParam("invoice_id") String referenceNumber) {
+        System.out.println("Invoice Id: " + referenceNumber);
     }
 
 }
