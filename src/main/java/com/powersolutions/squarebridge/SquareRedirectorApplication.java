@@ -12,11 +12,13 @@ public class SquareRedirectorApplication {
 		SpringApplication.run(SquareRedirectorApplication.class, args);
 	}
 
+	/*
 	@Bean
 	public CommandLineRunner demo() {
 		return (args -> {
 			System.out.println("We are up and running.");
 		});
 	}
+	*/
 
 }
