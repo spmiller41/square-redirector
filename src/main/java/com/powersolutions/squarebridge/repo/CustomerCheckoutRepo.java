@@ -1,6 +1,8 @@
 package com.powersolutions.squarebridge.repo;
 
 import com.powersolutions.squarebridge.entities.CustomerCheckout;
+import com.powersolutions.squarebridge.entities.Payment;
+import com.powersolutions.squarebridge.square.dto.SquarePaymentUpdate;
 import com.powersolutions.squarebridge.zoho.dto.ZohoInvoiceResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -27,6 +29,20 @@ public class CustomerCheckoutRepo {
             CustomerCheckout customerCheckout = entityManager.createQuery(query, CustomerCheckout.class)
                     .setParameter("invoiceId", invoiceId)
                     .getSingleResult();
+            return Optional.of(customerCheckout);
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<CustomerCheckout> findByOrderId(SquarePaymentUpdate paymentData) {
+        String query = "SELECT e FROM CustomerCheckout e WHERE e.squareOrderId = :squareOrderId";
+
+        try {
+            CustomerCheckout customerCheckout = entityManager.createQuery(query, CustomerCheckout.class)
+                    .setParameter("squareOrderId", paymentData.getOrderId())
+                    .getSingleResult();
+
             return Optional.of(customerCheckout);
         } catch (NoResultException ex) {
             return Optional.empty();
