@@ -21,6 +21,9 @@ public class Payment {
     @Column(name = "receipt_url")
     private String receiptUrl;
 
+    @Column(name = "amount")
+    private double amount;
+
     // Foreign Key
     @Column(name = "customer_checkout_id")
     private int customerCheckoutId;
@@ -31,6 +34,7 @@ public class Payment {
         this.paymentId = paymentUpdate.getPaymentId();
         this.status = paymentUpdate.getStatus();
         this.receiptUrl = paymentUpdate.getReceiptUrl();
+        this.amount = paymentUpdate.getAmount() / 100.0;
         this.customerCheckoutId = customerCheckout.getId();
     }
 
@@ -38,6 +42,7 @@ public class Payment {
     public String getPaymentId() { return paymentId; }
     public String getStatus() { return status; }
     public String getReceiptUrl() { return receiptUrl; }
+    public double getAmount() { return amount; }
     public int getCustomerCheckoutId() { return customerCheckoutId; }
 
     @Override
@@ -47,6 +52,7 @@ public class Payment {
                 ", paymentId='" + paymentId + '\'' +
                 ", status='" + status + '\'' +
                 ", receiptUrl='" + receiptUrl + '\'' +
+                ", amount=" + amount +
                 ", customerCheckoutId=" + customerCheckoutId +
                 '}';
     }
