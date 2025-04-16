@@ -16,6 +16,7 @@ public class SquarePaymentUpdate {
     private final String status;
     private final String orderId;
     private final String receiptUrl;
+    private final int amount;
 
     /**
      * Constructs a SquarePaymentUpdate from a raw JSON string payload.
@@ -33,12 +34,14 @@ public class SquarePaymentUpdate {
         this.status = payment.path("status").asText();
         this.orderId = payment.path("order_id").asText();
         this.receiptUrl = payment.path("receipt_url").asText();
+        this.amount = payment.path("amount_money").path("amount").asInt();
     }
 
     public String getPaymentId() { return paymentId; }
     public String getStatus() { return status; }
     public String getOrderId() { return orderId; }
     public String getReceiptUrl() { return receiptUrl; }
+    public int getAmount() { return amount; }
 
     @Override
     public String toString() {
@@ -47,6 +50,7 @@ public class SquarePaymentUpdate {
                 ", status='" + status + '\'' +
                 ", orderId='" + orderId + '\'' +
                 ", receiptUrl='" + receiptUrl + '\'' +
+                ", amount=" + amount +
                 '}';
     }
 
