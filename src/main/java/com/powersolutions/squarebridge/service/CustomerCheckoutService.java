@@ -1,6 +1,7 @@
 package com.powersolutions.squarebridge.service;
 
 import com.powersolutions.squarebridge.entities.CustomerCheckout;
+import com.powersolutions.squarebridge.entities.Payment;
 import com.powersolutions.squarebridge.repo.CustomerCheckoutRepo;
 import com.powersolutions.squarebridge.square.SquareCheckoutIntegration;
 import com.powersolutions.squarebridge.square.dto.SquareCheckoutResponse;
@@ -68,6 +69,18 @@ public class CustomerCheckoutService {
         SquareCheckoutResponse checkoutResponse = squareCheckoutIntegration.createPaymentLink(invoice);
         insertCustomerCheckoutData(invoice, checkoutResponse);
         return checkoutResponse.getCheckoutLink();
+    }
+
+    @Transactional
+    public CustomerCheckout findByPaymentRecord(Payment payment) {
+        Optional<CustomerCheckout> optCustomerCheckout = customerCheckoutRepo.findByPaymentRecord(payment);
+
+        if (optCustomerCheckout.isEmpty()) {
+            logger.error("Could not locate Customer Checkout via Payment Record. Data: {}", payment);
+            return null;
+        }
+
+        return optCustomerCheckout.get();
     }
 
     private void insertCustomerCheckoutData(ZohoInvoiceResponse invoice, SquareCheckoutResponse checkoutResponse) {
