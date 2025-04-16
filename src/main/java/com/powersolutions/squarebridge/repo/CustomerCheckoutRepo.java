@@ -22,6 +22,20 @@ public class CustomerCheckoutRepo {
         this.entityManager = entityManager;
     }
 
+    public Optional<CustomerCheckout> findByPaymentRecord(Payment payment) {
+        String query = "SELECT e FROM CustomerCheckout e WHERE e.id = :customerCheckoutId";
+
+        try {
+            CustomerCheckout customerCheckout = entityManager.createQuery(query, CustomerCheckout.class)
+                    .setParameter("customerCheckoutId", payment.getCustomerCheckoutId())
+                    .getSingleResult();
+
+            return Optional.of(customerCheckout);
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<CustomerCheckout> findByInvoiceId(String invoiceId) {
         String query = "SELECT e FROM CustomerCheckout e WHERE invoiceId = :invoiceId";
 
