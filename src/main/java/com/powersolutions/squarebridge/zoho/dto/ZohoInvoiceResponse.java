@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ZohoInvoiceResponse {
 
     private final String invoiceId;
-    private String customerId;
+    private final String invoiceNumber;
+    private final String customerId;
     private String firstName;
     private String lastName;
     private String email;
@@ -20,6 +21,7 @@ public class ZohoInvoiceResponse {
             JsonNode invoice = root.path("invoice");
 
             this.invoiceId = invoice.path("invoice_id").asText("");
+            this.invoiceNumber = invoice.path("invoice_number").asText("");
             this.balance = invoice.path("balance").asDouble();
             this.customerId = invoice.path("customer_id").asText("");
 
@@ -43,6 +45,7 @@ public class ZohoInvoiceResponse {
     }
 
     public String getInvoiceId() { return invoiceId; }
+    public String getInvoiceNumber() { return invoiceNumber; }
     public String getCustomerId() { return customerId; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
@@ -54,6 +57,8 @@ public class ZohoInvoiceResponse {
     public String toString() {
         return "ZohoInvoiceResponse{" +
                 "invoiceId='" + invoiceId + '\'' +
+                ", invoiceNumber='" + invoiceNumber + '\'' +
+                ", customerId='" + customerId + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
@@ -61,4 +66,5 @@ public class ZohoInvoiceResponse {
                 ", balance=" + balance +
                 '}';
     }
+
 }

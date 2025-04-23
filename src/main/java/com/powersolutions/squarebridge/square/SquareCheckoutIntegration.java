@@ -85,6 +85,7 @@ public class SquareCheckoutIntegration {
 
         Map<String, Object> body = new HashMap<>();
         body.put("idempotency_key", UUID.randomUUID().toString());
+        body.put("description", invoice.getInvoiceNumber());
         body.put("quick_pay", quickPay);
         body.put("pre_populated_data", prePopulatedData);
 

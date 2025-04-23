@@ -16,6 +16,9 @@ public class CustomerCheckout {
     @Column(name = "invoice_id")
     private String invoiceId;
 
+    @Column(name = "invoice_number")
+    private String invoiceNumber;
+
     @Column(name = "customer_id")
     private String customerId;
 
@@ -44,6 +47,7 @@ public class CustomerCheckout {
 
     public CustomerCheckout(ZohoInvoiceResponse invoice, SquareCheckoutResponse checkoutResponse) {
         setInvoiceId(invoice.getInvoiceId());
+        setInvoiceNumber(invoice.getInvoiceNumber());
         setCustomerId(invoice.getCustomerId());
         setFirstName(invoice.getFirstName());
         setLastName(invoice.getLastName());
@@ -61,6 +65,10 @@ public class CustomerCheckout {
     public String getInvoiceId() { return invoiceId; }
 
     public void setInvoiceId(String invoiceId) { this.invoiceId = invoiceId; }
+
+    public String getInvoiceNumber() { return invoiceNumber; }
+
+    public void setInvoiceNumber(String invoiceNumber) { this.invoiceNumber = invoiceNumber; }
 
     public String getFirstName() { return firstName; }
 
@@ -99,6 +107,7 @@ public class CustomerCheckout {
         return "CustomerCheckout{" +
                 "id=" + id +
                 ", invoiceId='" + invoiceId + '\'' +
+                ", invoiceNumber='" + invoiceNumber + '\'' +
                 ", customerId='" + customerId + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

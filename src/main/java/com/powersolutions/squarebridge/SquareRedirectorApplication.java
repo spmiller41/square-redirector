@@ -16,7 +16,7 @@ public class SquareRedirectorApplication {
 	@Bean
 	public CommandLineRunner demo() {
 		return (args -> {
-			System.out.println("We are up and running.");
+
 		});
 	}
 	*/
