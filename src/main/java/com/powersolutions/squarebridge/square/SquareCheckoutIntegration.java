@@ -85,7 +85,6 @@ public class SquareCheckoutIntegration {
 
         Map<String, Object> body = new HashMap<>();
         body.put("idempotency_key", UUID.randomUUID().toString());
-        body.put("description", invoice.getInvoiceNumber());
         body.put("quick_pay", quickPay);
         body.put("pre_populated_data", prePopulatedData);
 
@@ -94,13 +93,18 @@ public class SquareCheckoutIntegration {
 
 
     private String generateInvoiceName(ZohoInvoiceResponse invoice) {
+        String invoiceNumber = invoice.getInvoiceNumber() != null ? invoice.getInvoiceNumber().trim() : "";
         String firstName = invoice.getFirstName() != null ? invoice.getFirstName().trim() : "";
         String lastName = invoice.getLastName() != null ? invoice.getLastName().trim() : "";
         String fullName = (firstName + " " + lastName).trim();
 
+        String base = "Power Solutions Invoice";
+        String withInvoiceNumber = invoiceNumber.isEmpty() ? base : base + " (" + invoiceNumber + ")";
+
         return fullName.isEmpty()
-                ? "Power Solutions Invoice"
-                : "Power Solutions Invoice for " + fullName;
+                ? withInvoiceNumber
+                : withInvoiceNumber + " for " + fullName;
     }
+
 
 }
