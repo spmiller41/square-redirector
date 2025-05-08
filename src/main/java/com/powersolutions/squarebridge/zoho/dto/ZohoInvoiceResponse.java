@@ -37,12 +37,32 @@ public class ZohoInvoiceResponse {
         }
     }
 
+    /*
+     * Normalizes a US phone number string into E.164 format.
+     * <ul>
+     *   <li>Returns null if the input is null, blank, or cannot be parsed to a 10-digit number.</li>
+     *   <li>Strips all non-digit characters.</li>
+     *   <li>If it’s 11 digits starting with '1', the leading '1' is removed.</li>
+     *   <li>Returns "+1" followed by the 10-digit number if valid.</li>
+     * </ul>
+     *
+     * @param rawPhone the raw phone string (may include punctuation, spaces, or country code)
+     * @return the normalized E.164 phone number (e.g. "+13475677741") or null if invalid
+     */
     private String normalizePhone(String rawPhone) {
+        if (rawPhone == null || rawPhone.isBlank()) return null;
         String digits = rawPhone.replaceAll("\\D", "");
-        if (digits.length() == 10) return "+1" + digits;
-        if (digits.length() == 11 && digits.startsWith("1")) return "+" + digits;
+
+        if (digits.length() == 11 && digits.startsWith("1")) {
+            digits = digits.substring(1);
+        }
+
+        if (digits.length() == 10) {
+            return "+1" + digits;
+        }
         return null;
     }
+
 
     public String getInvoiceId() { return invoiceId; }
     public String getInvoiceNumber() { return invoiceNumber; }
