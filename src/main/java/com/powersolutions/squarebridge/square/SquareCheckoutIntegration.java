@@ -80,8 +80,13 @@ public class SquareCheckoutIntegration {
         quickPay.put("location_id", locationId);
 
         Map<String, Object> prePopulatedData = new HashMap<>();
-        prePopulatedData.put("buyer_email", invoice.getEmail());
-        prePopulatedData.put("buyer_phone_number", invoice.getPhone());
+
+        if (invoice.getEmail() != null) {
+            prePopulatedData.put("buyer_email", invoice.getEmail());
+        }
+        if (invoice.getPhone() != null) {
+            prePopulatedData.put("buyer_phone_number", invoice.getPhone());
+        }
 
         Map<String, Object> body = new HashMap<>();
         body.put("idempotency_key", UUID.randomUUID().toString());
